@@ -86,10 +86,18 @@ class PojedynczaRata(models.Model):
     wysokosc_raty = models.PositiveIntegerField()
     data_splaty = models.DateTimeField()
 
+class Wplywy(models.Model):
+    konto = models.ForeignKey(KontoBankowe, on_delete=models.CASCADE)
+    tytulem = models.CharField(max_length=150)
+    wplyw = models.PositiveIntegerField()
+    date = models.DateTimeField()
 
 
-
-
+class Wydatki(models.Model):
+    konto = models.ForeignKey(KontoBankowe, on_delete=models.CASCADE)
+    tytulem = models.CharField(max_length=150)
+    wydatek = models.PositiveIntegerField()
+    date = models.DateTimeField()
 
 
 
