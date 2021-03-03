@@ -63,6 +63,9 @@ class Leasing(models.Model):
     nip = models.PositiveIntegerField(null=True)
     nazwa_firmy = models.CharField(max_length=150, null=True)
 
+    def __str__(self):
+        return f"{self.nazwa_firmy} Identyfikator :{self.id}"
+
 
 class Raty(models.Model):
     imie = models.CharField(max_length=100, null=True)
@@ -70,21 +73,36 @@ class Raty(models.Model):
     pesel = models.PositiveIntegerField(null=True)
     ilosc_rat = models.PositiveIntegerField(null=True)
     zakup = GenericRelation(Zakup)
+    def __str__(self):
+        return f"{self.imie} {self.nazwisko} Identyfikator rat: {self.id}"
 
 
 class JednorazowaPlatnosc(models.Model):
     tytulem = models.CharField(max_length=200)
     zakup = GenericRelation(Zakup)
+
+    def __str__(self):
+        return f"{self.tytulem}. Identyfikator platnosci : {self.id}"
+
+  
     
 class RataLeasingu(models.Model):
     leasing = models.ForeignKey(Leasing, on_delete=models.CASCADE, null=True)
     wysokosc_raty = models.PositiveIntegerField()
     data_splaty = models.DateTimeField()
+    def __str__(self):
+        return f"Identyfikator raty leasingu: {self.id}"
+    
 
 class PojedynczaRata(models.Model):
     raty = models.ForeignKey(Raty, on_delete=models.CASCADE, null=True)
     wysokosc_raty = models.PositiveIntegerField()
     data_splaty = models.DateTimeField()
+
+    def __str__(self):
+        return f"Identyfikator pojedynczej raty: {self.id}"
+    
+
 
 class Wplywy(models.Model):
     konto = models.ForeignKey(KontoBankowe, on_delete=models.CASCADE)
@@ -92,12 +110,19 @@ class Wplywy(models.Model):
     wplyw = models.PositiveIntegerField()
     date = models.DateTimeField()
 
+    def __str__(self):
+        return f"Wplyw {self.wplyw} na konto {self.konto}"
+    
+
 
 class Wydatki(models.Model):
     konto = models.ForeignKey(KontoBankowe, on_delete=models.CASCADE)
     tytulem = models.CharField(max_length=150)
     wydatek = models.PositiveIntegerField()
     date = models.DateTimeField()
+
+    def __str__(self):
+        return f"Wydatek {self.wydatek} na konto {self.konto}"
 
 
 
